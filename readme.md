@@ -1,4 +1,4 @@
-R10.net için hazırladığım bu componetle basit olarak kayan yazı animasyonu yapabilirsiniz.
+R10.net için hazırladığım bu componentle basit olarak kayan yazı animasyonu yapabilirsiniz.
 
 
 Toolbox a sağ tıklayıp choose items i seçin ve .net framework components den KayanYazi.dll i seçin. Toolbox ınıza gelen
