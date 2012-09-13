@@ -1,0 +1,7 @@
+C:\Users\Ertan\Desktop\Geçici Projeler\c#\KayanYazi\KayanYazi\KayanYaziControl\KayanYazi\bin\Debug\KayanYazi.dll
+C:\Users\Ertan\Desktop\Geçici Projeler\c#\KayanYazi\KayanYazi\KayanYaziControl\KayanYazi\bin\Debug\KayanYazi.pdb
+C:\Users\Ertan\Desktop\Geçici Projeler\c#\KayanYazi\KayanYazi\KayanYaziControl\KayanYazi\obj\Debug\KayanYazi.csproj.GenerateResource.Cache
+C:\Users\Ertan\Desktop\Geçici Projeler\c#\KayanYazi\KayanYazi\KayanYaziControl\KayanYazi\obj\Debug\KayanYazi.dll
+C:\Users\Ertan\Desktop\Geçici Projeler\c#\KayanYazi\KayanYazi\KayanYaziControl\KayanYazi\obj\Debug\KayanYazi.pdb
+C:\Users\Ertan\Desktop\Geçici Projeler\c#\KayanYazi\KayanYazi\KayanYaziControl\KayanYazi\obj\Debug\KayanYazi.csprojResolveAssemblyReference.cache
+C:\Users\Ertan\Desktop\Geçici Projeler\c#\KayanYazi\KayanYazi\KayanYaziControl\KayanYazi\obj\Debug\KayanYazi.YaziKaydir.resources
