@@ -141,7 +141,7 @@ namespace KayanYazi
         /// /// <param name="pozisyon">pozisyon türünden enum ile yazıyı kontrol içinde konumlandırır</param>
         public void Basla(KaydirmaTuru tur, int hiz, Pozisyon pozisyon)
         {
-            if (AnaYazi.Text == "")
+            if (yazilar.Count ==0)
                 MessageBox.Show("Lütfen kaydırmak istediğiniz yazıyı ekleyin");
             else
             {
