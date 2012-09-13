@@ -17,7 +17,8 @@ namespace KayanYazi
         private Color YaziRengi;
         private Color ArkaPlanRengi;
         private KaydirmaTuru Tur;
-        private Pozisyon pozisyon; 
+        private Pozisyon pozisyon;
+        private bool? AnimasyonDurum =null;
         #endregion
 
         #region Public Enums
@@ -33,28 +34,7 @@ namespace KayanYazi
         } 
         #endregion
 
-        #region Settings
-        public void YaziRengiAyarla(Color yaziRengi)
-        {
-            YaziRengi = yaziRengi;
-
-        }
-
-        public void ArkaPlanRengiAyarla(Color arkaPlanRengi)
-        {
-            ArkaPlanRengi = arkaPlanRengi;
-        }
-
-        public void YaziHizalamaAyarla(ContentAlignment hizalama)
-        {
-            AnaYazi.TextAlign = hizalama;
-        }
-        public void FontBoyutuAyarla(int boyut)
-        {
-            AnaYazi.Font = new Font(AnaYazi.Font.FontFamily.Name, boyut);
-        } 
-        #endregion
-
+        
         #region Ctor
         public YaziKaydir()
         {
@@ -74,12 +54,53 @@ namespace KayanYazi
 
             X = 0;
             Y = 0;
-
+          
             YaziRengi = Color.Black;
             ArkaPlanRengi = Color.White;
             AnaYazi.Font = new Font(AnaYazi.Font.FontFamily.Name, 12);
 
         } 
+        #endregion
+
+        #region Settings
+        /// <summary>
+        /// Yazının font rengini ayarlar.
+        /// </summary>
+        /// <param name="yaziRengi">Color türünden renk parametresi alır. Örnek: Color.White</param>
+        public void YaziRengiAyarla(Color yaziRengi)
+        {
+            YaziRengi = yaziRengi;
+
+        }
+
+        /// <summary>
+        /// Kontrolün arkaplan rengini belirler
+        /// </summary>
+        /// <param name="arkaPlanRengi">Color türünden renk parametresi alır. Örnek: Color.Blue</param>
+        public void ArkaPlanRengiAyarla(Color arkaPlanRengi)
+        {
+            ArkaPlanRengi = arkaPlanRengi;
+        }
+
+        /// <summary>
+        /// Yazıyı kendi içinde hizalar
+        /// </summary>
+        /// <param name="hizalama">ContentAlignment türünden parametre alır. Örnek: ContentAlignment.MiddleCenter</param>
+        public void YaziHizalamaAyarla(ContentAlignment hizalama)
+        {
+            
+            AnaYazi.TextAlign = hizalama;
+        }
+
+        /// <summary>
+        /// Yazının fontunu belirler
+        /// </summary>
+        /// <param name="boyut">int türünden değer alır.</param>
+        public void FontBoyutuAyarla(int boyut)
+        {
+            AnaYazi.Font = new Font(AnaYazi.Font.FontFamily.Name, boyut);
+        }
+
         #endregion
 
         #region Public Methods
@@ -95,6 +116,24 @@ namespace KayanYazi
         }
 
         /// <summary>
+        /// Eklenmiş olan tüm yazılar silinip içerik temizlenir
+        /// </summary>
+        /// <returns>Temizleme işlemi başarılı ise true, değil ise false değeri geri dönderir</returns>
+        public bool TumYazilariTemizle()
+        {
+            if(yazilar.Count==0)
+                return false;
+            else
+            {
+                yazilar.Clear();
+                AnaYazi.Text = "";
+            }
+
+            return true;
+
+        }
+
+        /// <summary>
         /// Kaydırma işlemi başlar
         /// </summary>
         /// <param name="tur">kaydırma yönün belirlenir</param>
@@ -102,38 +141,79 @@ namespace KayanYazi
         /// /// <param name="pozisyon">pozisyon türünden enum ile yazıyı kontrol içinde konumlandırır</param>
         public void Basla(KaydirmaTuru tur, int hiz, Pozisyon pozisyon)
         {
-            Hiz = hiz;
-            Tur = tur;
-
-            tmrKaydir.Interval = Hiz;
-            this.pozisyon = pozisyon;
-
-
-            AnaYazi.ForeColor = YaziRengi;
-            panel1.BackColor = ArkaPlanRengi;
-            string tmpSuffix = "";
-            if (Tur == KaydirmaTuru.Sol || Tur == KaydirmaTuru.Sag)
-            {
-                tmpSuffix = " ";
-                X = panel1.Width;
-
-            }
+            if (AnaYazi.Text == "")
+                MessageBox.Show("Lütfen kaydırmak istediğiniz yazıyı ekleyin");
             else
             {
-                tmpSuffix = "\n";
-                Y = panel1.Height;
+                Hiz = hiz;
+                Tur = tur;
 
+                tmrKaydir.Interval = Hiz;
+                this.pozisyon = pozisyon;
+
+
+                AnaYazi.ForeColor = YaziRengi;
+                panel1.BackColor = ArkaPlanRengi;
+                string tmpSuffix = "";
+                if (Tur == KaydirmaTuru.Sol || Tur == KaydirmaTuru.Sag)
+                {
+                    tmpSuffix = " ";
+                    X = panel1.Width;
+
+                }
+                else
+                {
+                    tmpSuffix = "\n";
+                    Y = panel1.Height;
+
+                }
+
+
+                foreach (string yazi in yazilar)
+                {
+                    AnaYazi.Text += yazi + tmpSuffix;
+
+                }
+                AnaYazi.Location = new System.Drawing.Point(X, Y);
+                AnaYazi.Visible = true;
+                tmrKaydir.Start();
+                AnimasyonDurum = true;
             }
 
+            
+        }
 
-            foreach (string yazi in yazilar)
+        /// <summary>
+        /// Hareketli Animasyonu Durdurur
+        /// </summary>
+        public void Dur()
+        {
+            if(AnimasyonDurum==null)
             {
-                AnaYazi.Text += yazi + tmpSuffix;
-
+                MessageBox.Show("Başlatılmayan animasyon durdurulamaz.");
             }
-            AnaYazi.Location = new System.Drawing.Point(X, Y);
-            AnaYazi.Visible = true;
-            tmrKaydir.Start();
+            else if((bool) AnimasyonDurum)
+            {
+                tmrKaydir.Stop();
+                AnimasyonDurum = false;
+            }
+            
+        }
+
+        /// <summary>
+        /// Durdurulan animasyona kaldığı yerden devam eder
+        /// </summary>
+        public void DevamEt()
+        {
+            if(AnimasyonDurum==null)
+            {
+                MessageBox.Show("Başlatılmayan animasyon devam ettirilemez");
+            }
+            else if ((bool) (!AnimasyonDurum) )
+            {
+                tmrKaydir.Start();
+                AnimasyonDurum = true;
+            }
         }
         #endregion
 
